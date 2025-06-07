@@ -29,7 +29,7 @@ namespace OneCore
             // Setup Database
             string connectionString = Configuration.GetConnectionString("DatabaseConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(connectionString, b => b.MigrationsAssembly("OneCore")));
+                options.UseNpgsql(connectionString, b => b.MigrationsAssembly("OneCore")));
 
             services.AddAutoMapper(typeof(Startup));
             services.AddHealthChecks();
