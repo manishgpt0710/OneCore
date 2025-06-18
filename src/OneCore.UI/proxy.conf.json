@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "${API_BASE_URL}",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+} 

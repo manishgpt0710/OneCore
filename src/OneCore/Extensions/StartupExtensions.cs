@@ -47,9 +47,9 @@ namespace OneCore.Extensions
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo 
-                { 
-                    Version = "v1", 
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
                     Title = "OneCore API",
                     Description = "OneCore API Description",
                     Contact = new OpenApiContact
@@ -73,7 +73,7 @@ namespace OneCore.Extensions
         {
             services.Configure<IdentityOptions>(options =>
             {
-                // Password settings  
+                // Password settings
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 8;
                 options.Password.RequireNonAlphanumeric = false;
@@ -81,7 +81,7 @@ namespace OneCore.Extensions
                 options.Password.RequireLowercase = false;
                 options.Password.RequiredUniqueChars = 6;
 
-                // User settings  
+                // User settings
                 options.User.RequireUniqueEmail = true;
             });
 
@@ -90,12 +90,12 @@ namespace OneCore.Extensions
 
 
         #region Middlewares
-        
+
         public static IApplicationBuilder UseRequestResponseLogging(this IApplicationBuilder app)
         {
             return app.UseMiddleware<RequestResponseLoggingMiddleware>();
         }
-        
+
         #endregion
     }
 }

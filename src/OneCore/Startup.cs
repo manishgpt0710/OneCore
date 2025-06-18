@@ -12,6 +12,8 @@ using Newtonsoft.Json.Serialization;
 using OneCore.Data;
 using OneCore.Data.Models;
 using OneCore.Extensions;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace OneCore
 {
@@ -65,7 +67,26 @@ namespace OneCore
                 app.UseDeveloperExceptionPage();
             }
 
+            // Always use HTTPS redirection
             app.UseHttpsRedirection();
+
+            // Handle Chrome DevTools specific requests
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path.StartsWithSegments("/.well-known/appspecific"))
+                {
+                    context.Response.StatusCode = 200;
+                    context.Response.ContentType = "application/json";
+                    await context.Response.WriteAsync("{}");
+                    return;
+                }
+                await next();
+            });
+
+            // Serve static files from wwwroot/browser
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -79,16 +100,18 @@ namespace OneCore
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                // Handle SPA routing
+                endpoints.MapFallbackToFile("index.html");
             });
 
             app.UseHealthChecks("/healthcheck");
-
-            app.UseAuthentication();
         }
     }
 }

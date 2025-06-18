@@ -18,10 +18,10 @@ namespace OneCore.Data
             base.OnModelCreating(builder);
 
             // Apply any pending migrations
-            if (Database.GetPendingMigrations().Any())
-            {
-                Database.Migrate();
-            }
+            // if (Database.GetPendingMigrations().Any())
+            // {
+            //     Database.Migrate();
+            // }
         }
     }
 }

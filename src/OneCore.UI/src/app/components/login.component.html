@@ -1,0 +1,51 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Welcome Back</mat-card-title>
+      <mat-card-subtitle>Please sign in to continue</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="Enter your email">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+            Please enter a valid email address
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+          <button mat-icon-button matSuffix (click)="hide = !hide" type="button">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            Password is required
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+            Password must be at least 6 characters
+          </mat-error>
+        </mat-form-field>
+
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
+            <mat-icon>login</mat-icon>
+            Sign In
+          </button>
+        </div>
+
+        <div class="register-link">
+          Don't have an account? <a routerLink="/register">Register here</a>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  </mat-card>
+</div> 

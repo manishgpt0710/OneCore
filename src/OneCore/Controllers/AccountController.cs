@@ -64,7 +64,7 @@ namespace OneCore.Controllers
                 Email = user.Email,
                 Address = user.Address
             };
-            
+
             var result = await _userManager.CreateAsync(applicationUser, user.Password);
 
             if (result.Succeeded)
@@ -116,7 +116,8 @@ namespace OneCore.Controllers
 
             var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
             var tokenResult = await GenerateJwtToken(model.Email, appUser);
-            return Ok(tokenResult);
+            var response = new { token = tokenResult, user = appUser };
+            return Ok(response);
         }
 
         /// <summary>
@@ -160,10 +161,10 @@ namespace OneCore.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        
+
         private string GetModelStateErrorMessage()
         {
             return string.Join(" ", ModelState.Values.SelectMany(v => v.Errors).Select(x => x.ErrorMessage));
         }
     }
-} 
+}

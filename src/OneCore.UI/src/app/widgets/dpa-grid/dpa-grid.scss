@@ -1,0 +1,20 @@
+.grid-container {
+    height: calc(100vh - 100px); // Account for header and padding
+    width: 100%;
+    overflow: auto;
+    position: relative;
+}
+
+:host ::ng-deep {
+    .ag-root-wrapper {
+        overflow: auto;
+    }
+    
+    .ag-body-horizontal-scroll {
+        overflow-x: auto;
+    }
+    
+    .ag-body-vertical-scroll {
+        overflow-y: auto;
+    }
+}
